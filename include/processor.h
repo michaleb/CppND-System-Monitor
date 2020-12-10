@@ -3,7 +3,7 @@
 
 class Processor {
  public:
-  float Utilization();  // TODO: See src/processor.cpp
+  float Utilization();  
   void preIdle(float x) { preIdle_ = x;}
   void preNonIdle(float y) { preNonIdle_ = y;}
 
@@ -11,7 +11,7 @@ class Processor {
   float preNonIdle() { return preNonIdle_;}
   float preTotal() { return (preIdle_ + preNonIdle_);}
     
-  // TODO: Declare any necessary private members
+  
  private: 
  float preIdle_ = 0.0;
  float preNonIdle_ = 0.0;
