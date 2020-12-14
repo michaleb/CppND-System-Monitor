@@ -98,11 +98,9 @@ long LinuxParser::UpTime() {
   return stol(uptime); 
   
 }
-  
 
 // Function NOT used
 long LinuxParser::Jiffies() { return 0; }
-
 
 // Function NOT used
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
@@ -113,9 +111,10 @@ long LinuxParser::ActiveJiffies() { return 0; }
 // Function NOT used
 long LinuxParser::IdleJiffies() { return 0; }
 
+
 vector<string> LinuxParser::CpuUtilization() { 
   
-  string line, key, value;
+  string line, value;
   vector<string> procStat;
 
   std::ifstream filestream(kProcDirectory + kStatFilename);
@@ -135,7 +134,7 @@ vector<string> LinuxParser::CpuUtilization() {
 float LinuxParser::CpuUtilization(int pid) {
 
   string value, line;
-  float utime, stime, cutime, cstime, starttime;
+  long utime, stime, cutime, cstime, starttime;
   
   std::ifstream stream(kProcDirectory + "/"+ to_string(pid) + kStatFilename);
   if (stream.is_open()) {
@@ -145,26 +144,26 @@ float LinuxParser::CpuUtilization(int pid) {
       for (int i=0; i<22; i++){
         linestream >> value;
         if (i == TimeValues::kUtime_){
-          utime = stof(value);
+          utime = stol(value);
         }
         else if (i == TimeValues::kStime_){
-          stime = stof(value);
+          stime = stol(value);
         }
         else if (i == TimeValues::kCUtime_){
-          cutime = stof(value);
+          cutime = stol(value);
         }
         else if (i == TimeValues::kCStime_){
-          cstime = stof(value);
+          cstime = stol(value);
         }
         else if (i == TimeValues::kStarttime_){
-          starttime = stof(value);
+          starttime = stol(value);
         }
       }
     } 
   }  
     
   long uptime = LinuxParser::UpTime();
-  float totalTime = utime + stime + cutime + cstime;
+  long totalTime = utime + stime + cutime + cstime;
   float tSec = uptime - (starttime / Hertz);
 
   return ((totalTime / Hertz) / tSec);
