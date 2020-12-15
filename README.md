@@ -1,6 +1,6 @@
 # CppND-System-Monitor
 
-Output for the Systems monitor.
+Output for the System monitor.
 
 ![System Monitor](images/CPP-System-monitor.png)
 
